@@ -1,0 +1,13 @@
+.env
+
+# Claude planning docs
+langgraph-self-hosted-guide.md
+lead-generator-project-overview.md
+phase-1-architecture.md
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+node_modules/
+.next/
