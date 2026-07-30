@@ -38,4 +38,9 @@ def generate_copy(client: Anthropic, lead: dict) -> dict:
             )
         }]
     )
-    return json.loads(message.content[0].text)
+    text = message.content[0].text.strip()
+    # Strip markdown code fences if the model wraps the JSON
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1]
+        text = text.rsplit("```", 1)[0]
+    return json.loads(text.strip())

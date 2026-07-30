@@ -4,6 +4,7 @@
 langgraph-self-hosted-guide.md
 lead-generator-project-overview.md
 phase-1-architecture.md
+current_status.md
 __pycache__/
 *.pyc
 .venv/
@@ -11,3 +12,9 @@ venv/
 .DS_Store
 node_modules/
 .next/
+
+# Tooling
+.agents/
+.claude/
+.mcp.json
+skills-lock.json

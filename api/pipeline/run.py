@@ -32,21 +32,21 @@ def run_pipeline(filters: dict, run_id: str):
             slug = make_slug(
                 lead.get("name", "business"),
                 lead.get("city", ""),
-                lead.get("state", ""),
+                lead.get("state_code", ""),
             )
             result = supabase.table("leads").insert({
                 "pipeline_run_id": run_id,
                 "business_name": lead.get("name", ""),
                 "niche": filters.get("niche", "lawn_care"),
                 "city": lead.get("city"),
-                "state": lead.get("state"),
-                "gbp_url": lead.get("place_link"),
+                "state": lead.get("state_code"),
+                "gbp_url": lead.get("location_link"),
                 "email": lead.get("email"),
                 "phone": lead.get("phone"),
-                "address": lead.get("full_address"),
+                "address": lead.get("address"),
                 "slug": slug,
                 "lead_score": lead["lead_score"],
-                "has_website": False,
+                "has_website": bool(lead.get("website")),
             }).execute()
             if result.data:
                 lead_ids.append(result.data[0]["id"])
