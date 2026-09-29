@@ -1,31 +1,29 @@
 import re
 import secrets
 
-LAWN_CARE_KEYWORDS = {"lawn", "landscap", "mow", "grass", "turf", "garden", "yard", "sprinkler"}
+NICHE_KEYWORDS: dict[str, set[str]] = {
+    "lawn_care": {"lawn", "landscap", "mow", "grass", "turf", "garden", "yard", "sprinkler"},
+    "chiropractor": {"chiro", "chiropract", "spine", "spinal", "adjust", "chiropractic"},
+}
 
-# Outscraper business_status values
 ACTIVE_STATUSES = {"OPERATIONAL", "CLOSED_TEMPORARILY"}
 
 
-def passes_hard_filters(lead: dict) -> bool:
-    # 1. No website — Outscraper field is `website`
+def passes_hard_filters(lead: dict, niche: str = "lawn_care") -> bool:
     if lead.get("website"):
         return False
 
-    # 2. Niche match — check `type`/`category` (primary) and `subtypes` (comma-separated)
+    keywords = NICHE_KEYWORDS.get(niche, NICHE_KEYWORDS["lawn_care"])
     type_str = lead.get("type", "") or lead.get("category", "") or ""
     subtypes_str = lead.get("subtypes", "") or ""
     categories = f"{type_str} {subtypes_str}".lower()
-    if not any(kw in categories for kw in LAWN_CARE_KEYWORDS):
+    if not any(kw in categories for kw in keywords):
         return False
 
-    # 3. Recent activity — Outscraper exposes business_status; filter out permanently closed.
-    #    Review-date filtering requires a separate Outscraper reviews call (adds cost) — deferred.
     status = lead.get("business_status", "OPERATIONAL")
     if status == "CLOSED_PERMANENTLY":
         return False
 
-    # 4. US-based
     if lead.get("country_code", "US").upper() != "US":
         return False
 
@@ -40,10 +38,10 @@ def score_lead(lead: dict) -> int:
     ])
 
 
-def filter_and_score(raw_leads: list[dict]) -> list[dict]:
+def filter_and_score(raw_leads: list[dict], niche: str = "lawn_care") -> list[dict]:
     results = []
     for lead in raw_leads:
-        if not passes_hard_filters(lead):
+        if not passes_hard_filters(lead, niche):
             continue
         lead["lead_score"] = score_lead(lead)
         results.append(lead)

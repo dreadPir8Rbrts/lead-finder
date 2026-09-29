@@ -24,7 +24,7 @@ def run_pipeline(filters: dict, run_id: str):
 
         # Stage 2: Filter + Score
         update_run(run_id, status="filtering")
-        scored_leads = filter_and_score(raw_leads)
+        scored_leads = filter_and_score(raw_leads, niche=filters.get("niche", "lawn_care"))
         update_run(run_id, leads_scored=len(scored_leads))
 
         lead_ids = []

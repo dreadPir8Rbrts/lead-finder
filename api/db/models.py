@@ -10,6 +10,16 @@ class PipelineRunCreate(BaseModel):
     filters: dict = {}
 
 
+class TestLeadCreate(BaseModel):
+    niche: str = "chiropractor"
+    business_name: str
+    city: str
+    state: str
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    address: Optional[str] = None
+
+
 class PipelineRunOut(BaseModel):
     id: uuid.UUID
     niche: str

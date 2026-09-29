@@ -1,8 +1,12 @@
 import uuid
 from fastapi import APIRouter, BackgroundTasks
+from anthropic import Anthropic
 from ..db.client import supabase
-from ..db.models import PipelineRunCreate
+from ..db.models import PipelineRunCreate, TestLeadCreate
 from ..pipeline.run import run_pipeline
+from ..pipeline.filters import make_slug
+from ..pipeline.site_gen import generate_copy
+from ..config import settings
 
 router = APIRouter(prefix="/pipeline", tags=["pipeline"])
 
@@ -19,6 +23,38 @@ def trigger_run(body: PipelineRunCreate, background_tasks: BackgroundTasks):
     }).execute()
     background_tasks.add_task(run_pipeline, {**body.filters, "niche": body.niche}, run_id)
     return {"run_id": run_id}
+
+
+@router.post("/test-lead", status_code=201)
+def create_test_lead(body: TestLeadCreate):
+    slug = make_slug(body.business_name, body.city, body.state)
+    lead_data = {
+        "business_name": body.business_name,
+        "niche": body.niche,
+        "city": body.city,
+        "state": body.state,
+        "phone": body.phone,
+        "email": body.email,
+        "address": body.address,
+        "slug": slug,
+        "lead_score": sum([bool(body.address), bool(body.email), bool(body.phone)]),
+        "has_website": False,
+    }
+    lead_result = supabase.table("leads").insert(lead_data).execute()
+    lead_id = lead_result.data[0]["id"]
+
+    lead_for_gen = {**lead_data, "id": lead_id}
+    client = Anthropic(api_key=settings.anthropic_api_key)
+    copy = generate_copy(client, lead_for_gen)
+
+    supabase.table("demo_sites").insert({
+        "lead_id": lead_id,
+        "slug": slug,
+        "status": "generated",
+        "site_data": copy,
+    }).execute()
+
+    return {"slug": slug, "demo_url": f"/demo/{slug}"}
 
 
 @router.get("/runs")
