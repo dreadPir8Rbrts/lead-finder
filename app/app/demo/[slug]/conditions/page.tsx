@@ -127,8 +127,7 @@ export default async function ConditionsPage({
         </p>
         <Link
           href={`${base}/contact`}
-          className="inline-block text-white font-bold px-8 py-3 rounded-full transition-colors"
-          style={{ backgroundColor: '#0B6E72' }}
+          className="inline-block bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] font-bold px-8 py-3 rounded-full transition-colors"
         >
           {copy.cta}
         </Link>

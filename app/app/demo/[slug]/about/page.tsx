@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getDemoSite } from '../_data'
 
@@ -11,7 +10,6 @@ export default async function AboutPage({
   const site = await getDemoSite(slug)
   if (!site) notFound()
   const { copy, business_name, city, state } = site
-  const base = `/demo/${slug}`
 
   return (
     <>
@@ -38,7 +36,7 @@ export default async function AboutPage({
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#0B6E72' }}>
-              Meet Your Doctor
+              Meet Your Chiropractor
             </p>
             <h2 className="text-3xl font-bold text-slate-800 mb-5">{copy.doctor.name}</h2>
             <p className="text-slate-600 leading-relaxed">{copy.doctor.bio}</p>
@@ -107,18 +105,6 @@ export default async function AboutPage({
           </div>
         </section>
       )}
-
-      {/* Internal CTA */}
-      <section className="py-14 px-6 bg-white text-center">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">Ready to feel better?</h2>
-        <Link
-          href={`${base}/contact`}
-          className="inline-block text-white font-bold px-8 py-3 rounded-full transition-colors"
-          style={{ backgroundColor: '#0B6E72' }}
-        >
-          {copy.cta}
-        </Link>
-      </section>
     </>
   )
 }

@@ -47,16 +47,14 @@ export default async function DemoLayout({
           {site.phone ? (
             <a
               href={`tel:${site.phone}`}
-              className="hidden md:inline-block text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
-              style={{ backgroundColor: '#0B6E72' }}
+              className="hidden md:inline-block bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] text-sm font-semibold px-5 py-2 rounded-full transition-colors"
             >
               {site.copy.cta}
             </a>
           ) : (
             <Link
               href={`${base}/contact`}
-              className="hidden md:inline-block text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
-              style={{ backgroundColor: '#0B6E72' }}
+              className="hidden md:inline-block bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] text-sm font-semibold px-5 py-2 rounded-full transition-colors"
             >
               {site.copy.cta}
             </Link>
@@ -75,8 +73,7 @@ export default async function DemoLayout({
             {site.phone && (
               <a
                 href={`tel:${site.phone}`}
-                className="inline-block bg-white font-bold text-lg px-8 py-3 rounded-full hover:bg-teal-50 transition-colors"
-                style={{ color: '#0B6E72' }}
+                className="inline-block bg-[#F5B83D] text-[#0a4a4e] font-bold text-lg px-8 py-3 rounded-full hover:bg-[#E0A32A] transition-colors"
               >
                 {site.phone}
               </a>

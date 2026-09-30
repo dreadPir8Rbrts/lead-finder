@@ -143,7 +143,7 @@ export default async function ContactPage({
           {/* Right: Contact Form */}
           <div className="bg-slate-50 rounded-3xl p-8">
             <h2 className="text-xl font-bold text-slate-800 mb-1">Request an Appointment</h2>
-            <p className="text-slate-500 text-sm mb-6">We'll get back to you within one business day.</p>
+            <p className="text-slate-500 text-sm mb-6">We'll get back to you within one business day. Please do not include any Protected Health Information (PHI), as we will address that during your appointment.</p>
             <form className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -189,8 +189,7 @@ export default async function ContactPage({
               </div>
               <button
                 type="submit"
-                className="w-full text-white font-bold py-3 rounded-xl transition-colors text-base"
-                style={{ backgroundColor: '#0B6E72' }}
+                className="w-full bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] font-bold py-3 rounded-xl transition-colors text-base"
               >
                 {copy.cta}
               </button>
@@ -213,8 +212,7 @@ export default async function ContactPage({
           href={mapsDirectionsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white font-bold px-6 py-2.5 rounded-full shadow-lg text-sm transition-colors"
-          style={{ backgroundColor: '#0B6E72' }}
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] font-bold px-6 py-2.5 rounded-full shadow-lg text-sm transition-colors"
         >
           Get Directions →
         </a>
