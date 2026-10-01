@@ -18,6 +18,8 @@ class TestLeadCreate(BaseModel):
     phone: Optional[str] = None
     email: Optional[str] = None
     address: Optional[str] = None
+    logo_url: Optional[str] = None
+    style: str = "classic"
 
 
 class PipelineRunOut(BaseModel):
@@ -43,6 +45,7 @@ class LeadOut(BaseModel):
     city: Optional[str]
     state: Optional[str]
     gbp_url: Optional[str]
+    logo_url: Optional[str]
     email: Optional[str]
     phone: Optional[str]
     address: Optional[str]

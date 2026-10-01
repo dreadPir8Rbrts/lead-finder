@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import StylePicker from './StylePicker'
+import { DEFAULT_STYLE } from '@/lib/themes'
 
 export default function TestLeadForm() {
   const [niche, setNiche] = useState('chiropractor')
@@ -10,6 +12,8 @@ export default function TestLeadForm() {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
+  const [logoUrl, setLogoUrl] = useState('')
+  const [style, setStyle] = useState(DEFAULT_STYLE)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<{ slug: string; demo_url: string } | { error: string } | null>(null)
 
@@ -29,6 +33,8 @@ export default function TestLeadForm() {
           phone: phone || null,
           email: email || null,
           address: address || null,
+          logo_url: logoUrl || null,
+          style,
         }),
       })
       const data = await res.json()
@@ -130,6 +136,21 @@ export default function TestLeadForm() {
           />
         </div>
 
+        {/* Logo URL */}
+        <div className="flex flex-col gap-1">
+          <label className="text-xs font-medium text-gray-600">Logo URL</label>
+          <input
+            type="url"
+            value={logoUrl}
+            onChange={e => setLogoUrl(e.target.value)}
+            placeholder="https://…/logo.png"
+            className="border border-gray-300 rounded px-3 py-1.5 text-sm text-black w-52 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-end gap-3">
+        <StylePicker value={style} onChange={setStyle} />
         <div className="flex flex-col justify-end">
           <button
             type="submit"

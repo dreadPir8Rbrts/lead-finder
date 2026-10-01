@@ -25,6 +25,8 @@ export type DemoSite = {
   city: string | null
   state: string | null
   gbp_url: string | null
+  logo_url: string | null
+  style: string
   copy: ChiroCopy
 }
 
@@ -33,6 +35,7 @@ export const getDemoSite = cache(async (slug: string): Promise<DemoSite | null> 
     .from('demo_sites')
     .select(`
       slug,
+      style,
       site_data,
       leads (
         niche,
@@ -42,7 +45,8 @@ export const getDemoSite = cache(async (slug: string): Promise<DemoSite | null> 
         address,
         city,
         state,
-        gbp_url
+        gbp_url,
+        logo_url
       )
     `)
     .eq('slug', slug)
@@ -63,6 +67,8 @@ export const getDemoSite = cache(async (slug: string): Promise<DemoSite | null> 
     city: lead.city ?? null,
     state: lead.state ?? null,
     gbp_url: lead.gbp_url ?? null,
+    logo_url: lead.logo_url ?? null,
+    style: data.style ?? 'classic',
     copy: {
       hero: copy.hero ?? { headline: '', subheadline: '' },
       uvp: copy.uvp ?? '',

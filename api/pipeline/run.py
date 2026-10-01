@@ -5,6 +5,7 @@ from .scraper import scrape_gbp
 from .filters import filter_and_score, make_slug
 from .site_gen import generate_copy
 from .outreach import queue_email
+from .logos import usable_logo_url
 from ..db.client import supabase
 from ..config import settings
 
@@ -41,6 +42,7 @@ def run_pipeline(filters: dict, run_id: str):
                 "city": lead.get("city"),
                 "state": lead.get("state_code"),
                 "gbp_url": lead.get("location_link"),
+                "logo_url": usable_logo_url(lead.get("logo")),
                 "email": lead.get("email"),
                 "phone": lead.get("phone"),
                 "address": lead.get("address"),
@@ -62,9 +64,12 @@ def run_pipeline(filters: dict, run_id: str):
                     "lead_id": lead_id,
                     "slug": lead["slug"],
                     "status": "generated",
+                    "style": filters.get("style", "classic"),
                     "site_data": copy,
                 }).execute()
                 sites_generated += 1
+                # Per-site progress so the admin page can show it live
+                update_run(run_id, sites_generated=sites_generated)
             except Exception as e:
                 print(f"[site_gen] failed for lead {lead_id}: {e}")
         update_run(run_id, sites_generated=sites_generated)

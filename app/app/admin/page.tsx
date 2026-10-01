@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase'
 import TriggerForm from './TriggerForm'
 import TestLeadForm from './TestLeadForm'
+import LeadsTable from './LeadsTable'
+import AutoRefresh from './AutoRefresh'
 
 async function getPipelineRuns() {
   const { data } = await supabase
@@ -14,9 +16,9 @@ async function getPipelineRuns() {
 async function getLeads() {
   const { data } = await supabase
     .from('leads')
-    .select('*, demo_sites(status, slug), outreach(status)')
+    .select('*, demo_sites(status, slug, style), outreach(status)')
     .order('lead_score', { ascending: false })
-    .limit(200)
+    .limit(1000)
   return data ?? []
 }
 
@@ -28,6 +30,17 @@ const STATUS_COLORS: Record<string, string> = {
   queuing_outreach: 'bg-orange-100 text-orange-700',
   complete: 'bg-green-100 text-green-700',
   failed: 'bg-red-100 text-red-700',
+}
+
+const FINISHED_STATUSES = ['complete', 'failed']
+// Runs older than this are treated as dead (e.g. the API restarted mid-run), so they don't poll forever
+const MAX_RUN_AGE_MS = 60 * 60 * 1000
+
+function hasActiveRun(runs: { status: string; started_at: string }[]) {
+  const now = Date.now()
+  return runs.some(
+    run => !FINISHED_STATUSES.includes(run.status) && now - new Date(run.started_at).getTime() < MAX_RUN_AGE_MS
+  )
 }
 
 export default async function AdminPage() {
@@ -55,8 +68,9 @@ export default async function AdminPage() {
 
         {/* Pipeline Runs */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 flex items-center gap-3">
             Recent Runs
+            <AutoRefresh active={hasActiveRun(runs)} />
           </h2>
           <div className="bg-white rounded-lg border border-gray-200 overflow-x-auto">
             <table className="min-w-full text-sm">
@@ -98,53 +112,7 @@ export default async function AdminPage() {
 
         {/* Leads */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-            Leads <span className="text-gray-400 font-normal normal-case">({leads.length})</span>
-          </h2>
-          <div className="bg-white rounded-lg border border-gray-200 overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="border-b border-gray-200 bg-gray-50">
-                <tr>
-                  {['Business', 'Location', 'Phone', 'Email', 'Score', 'Demo Site', 'GBP', 'Outreach'].map(h => (
-                    <th key={h} className="px-4 py-2 text-left font-medium text-gray-600">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {leads.length === 0 && (
-                  <tr><td colSpan={8} className="px-4 py-6 text-center text-gray-400">No leads yet</td></tr>
-                )}
-                {leads.map((lead: any) => {
-                  const site = Array.isArray(lead.demo_sites) ? lead.demo_sites[0] : lead.demo_sites
-                  const outreach = Array.isArray(lead.outreach) ? lead.outreach[0] : lead.outreach
-                  return (
-                    <tr key={lead.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">{lead.business_name}</td>
-                      <td className="px-4 py-2 text-gray-600 whitespace-nowrap">
-                        {[lead.city, lead.state].filter(Boolean).join(', ')}
-                      </td>
-                      <td className="px-4 py-2 text-gray-600">{lead.phone ?? '—'}</td>
-                      <td className="px-4 py-2 text-gray-600">{lead.email ?? '—'}</td>
-                      <td className="px-4 py-2 text-center font-medium text-gray-700">{lead.lead_score}</td>
-                      <td className="px-4 py-2">
-                        {site?.slug
-                          ? <a href={`/demo/${site.slug}`} target="_blank" className="text-blue-600 hover:underline">View</a>
-                          : <span className="text-gray-400">—</span>
-                        }
-                      </td>
-                      <td className="px-4 py-2">
-                        {lead.gbp_url
-                          ? <a href={lead.gbp_url} target="_blank" className="text-blue-600 hover:underline">GBP</a>
-                          : <span className="text-gray-400">—</span>
-                        }
-                      </td>
-                      <td className="px-4 py-2 text-gray-600 capitalize">{outreach?.status ?? '—'}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+          <LeadsTable leads={leads} />
         </section>
       </main>
     </div>

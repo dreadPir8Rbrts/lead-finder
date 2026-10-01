@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getDemoSite } from './_data'
+import { themeStyle } from '@/lib/themes'
+import LogoImage from './LogoImage'
 
 export default async function DemoLayout({
   children,
@@ -22,15 +24,21 @@ export default async function DemoLayout({
   ]
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div
+      className="demo-site min-h-screen flex flex-col bg-[var(--surface)]"
+      style={{ ...themeStyle(site.style), fontFamily: 'var(--font-body)' }}
+    >
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+      <header className="sticky top-0 z-50 bg-[var(--surface)] shadow-sm border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
             href={base}
-            className="font-bold text-lg"
-            style={{ color: '#0B6E72' }}
+            className="flex items-center gap-3 font-bold text-lg"
+            style={{ color: 'var(--brand)' }}
           >
+            {site.logo_url && (
+              <LogoImage src={site.logo_url} className="h-10 w-10 rounded-lg object-cover" />
+            )}
             {site.business_name}
           </Link>
           <nav className="hidden md:flex items-center gap-7">
@@ -38,7 +46,7 @@ export default async function DemoLayout({
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-slate-600 hover:text-teal-700 transition-colors"
+                className="text-sm font-medium text-slate-600 hover:text-[var(--brand)] transition-colors"
               >
                 {link.label}
               </Link>
@@ -47,14 +55,14 @@ export default async function DemoLayout({
           {site.phone ? (
             <a
               href={`tel:${site.phone}`}
-              className="hidden md:inline-block bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] text-sm font-semibold px-5 py-2 rounded-full transition-colors"
+              className="hidden md:inline-block bg-[var(--btn)] hover:bg-[var(--btn-hover)] text-[var(--btn-text)] text-sm font-semibold px-5 py-2 rounded-[var(--radius-btn)] transition-colors"
             >
               {site.copy.cta}
             </a>
           ) : (
             <Link
               href={`${base}/contact`}
-              className="hidden md:inline-block bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] text-sm font-semibold px-5 py-2 rounded-full transition-colors"
+              className="hidden md:inline-block bg-[var(--btn)] hover:bg-[var(--btn-hover)] text-[var(--btn-text)] text-sm font-semibold px-5 py-2 rounded-[var(--radius-btn)] transition-colors"
             >
               {site.copy.cta}
             </Link>
@@ -65,22 +73,22 @@ export default async function DemoLayout({
       <main className="flex-1">{children}</main>
 
       {/* Footer CTA Block */}
-      <section style={{ backgroundColor: '#0B6E72' }} className="text-white py-16 px-6">
+      <section style={{ backgroundColor: 'var(--brand)' }} className="text-white py-16 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-3">{site.copy.cta}</h2>
-          <p className="text-teal-100 mb-7 text-lg">{site.copy.service_area}</p>
+          <p className="text-[var(--on-brand-subtle)] mb-7 text-lg">{site.copy.service_area}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {site.phone && (
               <a
                 href={`tel:${site.phone}`}
-                className="inline-block bg-[#F5B83D] text-[#0a4a4e] font-bold text-lg px-8 py-3 rounded-full hover:bg-[#E0A32A] transition-colors"
+                className="inline-block bg-[var(--btn)] text-[var(--btn-text)] font-bold text-lg px-8 py-3 rounded-[var(--radius-btn)] hover:bg-[var(--btn-hover)] transition-colors"
               >
                 {site.phone}
               </a>
             )}
             <Link
               href={`${base}/contact`}
-              className="inline-block border-2 border-white text-white font-semibold text-lg px-8 py-3 rounded-full hover:bg-white/10 transition-colors"
+              className="inline-block border-2 border-white text-white font-semibold text-lg px-8 py-3 rounded-[var(--radius-btn)] hover:bg-white/10 transition-colors"
             >
               Request Appointment
             </Link>
@@ -92,7 +100,12 @@ export default async function DemoLayout({
       <footer className="bg-slate-900 text-slate-300 py-12 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <p className="text-white font-bold text-lg mb-2">{site.business_name}</p>
+            <div className="flex items-center gap-3 mb-2">
+              {site.logo_url && (
+                <LogoImage src={site.logo_url} className="h-9 w-9 rounded-lg object-cover bg-white" />
+              )}
+              <p className="text-white font-bold text-lg">{site.business_name}</p>
+            </div>
             <p className="text-sm leading-relaxed">{site.copy.uvp || site.copy.service_area}</p>
           </div>
           <div>

@@ -22,19 +22,19 @@ export default async function ContactPage({
       {/* Page Hero */}
       <section
         className="text-white py-20 px-6"
-        style={{ background: 'linear-gradient(135deg, #0a4a4e 0%, #0B6E72 100%)' }}
+        style={{ background: 'linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%)' }}
       >
         <div className="max-w-6xl mx-auto">
-          <p className="text-teal-200 text-sm font-semibold uppercase tracking-widest mb-3">
+          <p className="text-[var(--on-brand-muted)] text-sm font-semibold uppercase tracking-widest mb-3">
             Get In Touch
           </p>
           <h1 className="text-4xl md:text-5xl font-bold mb-3">Contact Us</h1>
-          <p className="text-teal-100 text-lg max-w-xl">{business_name}</p>
+          <p className="text-[var(--on-brand-subtle)] text-lg max-w-xl">{business_name}</p>
         </div>
       </section>
 
       {/* Contact Info + Form */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-[var(--surface)]">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14">
 
           {/* Left: Contact Info */}
@@ -46,7 +46,7 @@ export default async function ContactPage({
                 <div>
                   <p
                     className="text-xs font-semibold uppercase tracking-widest mb-1"
-                    style={{ color: '#0B6E72' }}
+                    style={{ color: 'var(--brand)' }}
                   >
                     Address
                   </p>
@@ -59,7 +59,7 @@ export default async function ContactPage({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-semibold mt-1 inline-block hover:underline"
-                    style={{ color: '#0B6E72' }}
+                    style={{ color: 'var(--brand)' }}
                   >
                     Get Directions →
                   </a>
@@ -70,14 +70,14 @@ export default async function ContactPage({
                 <div>
                   <p
                     className="text-xs font-semibold uppercase tracking-widest mb-1"
-                    style={{ color: '#0B6E72' }}
+                    style={{ color: 'var(--brand)' }}
                   >
                     Phone
                   </p>
                   <a
                     href={`tel:${phone}`}
                     className="text-slate-700 font-semibold text-lg hover:underline"
-                    style={{ color: '#0B6E72' }}
+                    style={{ color: 'var(--brand)' }}
                   >
                     {phone}
                   </a>
@@ -88,7 +88,7 @@ export default async function ContactPage({
                 <div>
                   <p
                     className="text-xs font-semibold uppercase tracking-widest mb-1"
-                    style={{ color: '#0B6E72' }}
+                    style={{ color: 'var(--brand)' }}
                   >
                     Email
                   </p>
@@ -108,7 +108,7 @@ export default async function ContactPage({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-semibold hover:underline"
-                    style={{ color: '#0B6E72' }}
+                    style={{ color: 'var(--brand)' }}
                   >
                     View on Google Maps →
                   </a>
@@ -118,7 +118,7 @@ export default async function ContactPage({
               <div>
                 <p
                   className="text-xs font-semibold uppercase tracking-widest mb-3"
-                  style={{ color: '#0B6E72' }}
+                  style={{ color: 'var(--brand)' }}
                 >
                   Office Hours
                 </p>
@@ -141,7 +141,7 @@ export default async function ContactPage({
           </div>
 
           {/* Right: Contact Form */}
-          <div className="bg-slate-50 rounded-3xl p-8">
+          <div className="bg-[var(--surface-alt)] rounded-3xl p-8">
             <h2 className="text-xl font-bold text-slate-800 mb-1">Request an Appointment</h2>
             <p className="text-slate-500 text-sm mb-6">We'll get back to you within one business day. Please do not include any Protected Health Information (PHI), as we will address that during your appointment.</p>
             <form className="space-y-4">
@@ -151,7 +151,7 @@ export default async function ContactPage({
                   <input
                     type="text"
                     placeholder="Jane"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                   />
                 </div>
                 <div>
@@ -159,7 +159,7 @@ export default async function ContactPage({
                   <input
                     type="text"
                     placeholder="Doe"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                   />
                 </div>
               </div>
@@ -168,7 +168,7 @@ export default async function ContactPage({
                 <input
                   type="tel"
                   placeholder="(555) 000-0000"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                 />
               </div>
               <div>
@@ -176,7 +176,7 @@ export default async function ContactPage({
                 <input
                   type="email"
                   placeholder="jane@example.com"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                 />
               </div>
               <div>
@@ -184,12 +184,12 @@ export default async function ContactPage({
                 <textarea
                   rows={4}
                   placeholder="Briefly describe your condition or concern..."
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)] resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] font-bold py-3 rounded-xl transition-colors text-base"
+                className="w-full bg-[var(--btn)] hover:bg-[var(--btn-hover)] text-[var(--btn-text)] font-bold py-3 rounded-[var(--radius-btn)] transition-colors text-base"
               >
                 {copy.cta}
               </button>
@@ -212,7 +212,7 @@ export default async function ContactPage({
           href={mapsDirectionsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-[#F5B83D] hover:bg-[#E0A32A] text-[#0a4a4e] font-bold px-6 py-2.5 rounded-full shadow-lg text-sm transition-colors"
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-[var(--btn)] hover:bg-[var(--btn-hover)] text-[var(--btn-text)] font-bold px-6 py-2.5 rounded-[var(--radius-btn)] shadow-lg text-sm transition-colors"
         >
           Get Directions →
         </a>
@@ -220,10 +220,10 @@ export default async function ContactPage({
 
       {/* UVP + Testimonial */}
       {copy.uvp && (
-        <section className="py-12 px-6 text-center" style={{ backgroundColor: '#e6f5f5' }}>
+        <section className="py-12 px-6 text-center" style={{ backgroundColor: 'var(--brand-soft)' }}>
           <p
             className="max-w-3xl mx-auto font-semibold text-lg leading-snug"
-            style={{ color: '#0a4a4e' }}
+            style={{ color: 'var(--brand-dark)' }}
           >
             {copy.uvp}
           </p>
@@ -231,11 +231,11 @@ export default async function ContactPage({
       )}
 
       {copy.testimonials[0] && (
-        <section className="py-20 px-6 text-white" style={{ backgroundColor: '#0B6E72' }}>
+        <section className="py-20 px-6 text-white" style={{ backgroundColor: 'var(--brand)' }}>
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-6xl font-serif mb-4" style={{ opacity: 0.4 }}>"</p>
             <p className="text-xl leading-relaxed mb-6">{copy.testimonials[0].text}</p>
-            <p className="text-sm font-semibold" style={{ color: '#99d4d6' }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--on-brand-muted)' }}>
               — {copy.testimonials[0].author}
             </p>
           </div>
