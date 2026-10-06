@@ -1,24 +1,41 @@
 import { supabase } from '@/lib/supabase'
+import { connection } from 'next/server'
 import TriggerForm from './TriggerForm'
 import TestLeadForm from './TestLeadForm'
-import LeadsTable from './LeadsTable'
+import LeadsTable, { type Lead } from './LeadsTable'
 import AutoRefresh from './AutoRefresh'
 
+type PipelineRun = {
+  id: string
+  started_at: string
+  trigger: string
+  status: string
+  leads_found: number
+  leads_scored: number
+  sites_generated: number
+  emails_queued: number
+  filters: { city?: string; state?: string; limit?: number } | null
+}
+
 async function getPipelineRuns() {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('pipeline_runs')
     .select('*')
     .order('started_at', { ascending: false })
     .limit(10)
+    .overrideTypes<PipelineRun[], { merge: false }>()
+  if (error) throw new Error(`Unable to load pipeline runs (${error.code})`)
   return data ?? []
 }
 
 async function getLeads() {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('leads')
     .select('*, demo_sites(status, slug, style), outreach(status)')
     .order('lead_score', { ascending: false })
     .limit(1000)
+    .overrideTypes<Lead[], { merge: false }>()
+  if (error) throw new Error(`Unable to load leads (${error.code})`)
   return data ?? []
 }
 
@@ -44,6 +61,8 @@ function hasActiveRun(runs: { status: string; started_at: string }[]) {
 }
 
 export default async function AdminPage() {
+  // The dashboard and its polling must read current data, not a build-time snapshot.
+  await connection()
   const [runs, leads] = await Promise.all([getPipelineRuns(), getLeads()])
 
   return (
@@ -85,7 +104,7 @@ export default async function AdminPage() {
                 {runs.length === 0 && (
                   <tr><td colSpan={8} className="px-4 py-6 text-center text-gray-400">No runs yet</td></tr>
                 )}
-                {runs.map((run: any) => (
+                {runs.map(run => (
                   <tr key={run.id} className="hover:bg-gray-50">
                     <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
                       {new Date(run.started_at).toLocaleString()}

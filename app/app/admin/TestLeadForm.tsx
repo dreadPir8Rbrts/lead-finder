@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import StylePicker from './StylePicker'
 import { DEFAULT_STYLE } from '@/lib/themes'
 
 export default function TestLeadForm() {
+  const router = useRouter()
   const [niche, setNiche] = useState('chiropractor')
   const [businessName, setBusinessName] = useState('')
   const [city, setCity] = useState('')
@@ -38,8 +40,11 @@ export default function TestLeadForm() {
         }),
       })
       const data = await res.json()
-      if (!res.ok) setResult({ error: data.detail ?? 'Request failed' })
-      else setResult(data)
+      if (!res.ok) setResult({ error: typeof data.detail === 'string' ? data.detail : 'Request failed' })
+      else {
+        setResult(data)
+        router.refresh()
+      }
     } catch {
       setResult({ error: 'Failed to reach API' })
     } finally {

@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { THEMES } from '@/lib/themes'
 
-type Lead = {
+export type Lead = {
   id: string
   business_name: string
   niche: string

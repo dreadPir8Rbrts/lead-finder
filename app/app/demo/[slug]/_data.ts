@@ -30,8 +30,15 @@ export type DemoSite = {
   copy: ChiroCopy
 }
 
+type DemoSiteRow = {
+  slug: string
+  style: string | null
+  site_data: Partial<ChiroCopy> | null
+  leads: Omit<DemoSite, 'slug' | 'style' | 'copy'> | null
+}
+
 export const getDemoSite = cache(async (slug: string): Promise<DemoSite | null> => {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('demo_sites')
     .select(`
       slug,
@@ -50,12 +57,15 @@ export const getDemoSite = cache(async (slug: string): Promise<DemoSite | null> 
       )
     `)
     .eq('slug', slug)
-    .single()
+    .maybeSingle()
+    .overrideTypes<DemoSiteRow | null, { merge: false }>()
 
+  if (error) throw new Error(`Unable to load demo site (${error.code})`)
   if (!data) return null
 
-  const lead = (data.leads as any) ?? {}
-  const copy = (data.site_data as any) ?? {}
+  const lead = data.leads
+  if (!lead) throw new Error('Demo site is missing its business record')
+  const copy = data.site_data ?? {}
 
   return {
     slug: data.slug,

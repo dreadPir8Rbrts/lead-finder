@@ -143,7 +143,7 @@ export default async function ContactPage({
           {/* Right: Contact Form */}
           <div className="bg-[var(--surface-alt)] rounded-3xl p-8">
             <h2 className="text-xl font-bold text-slate-800 mb-1">Request an Appointment</h2>
-            <p className="text-slate-500 text-sm mb-6">We'll get back to you within one business day. Please do not include any Protected Health Information (PHI), as we will address that during your appointment.</p>
+            <p className="text-slate-500 text-sm mb-6">We&apos;ll get back to you within one business day. Please do not include any Protected Health Information (PHI), as we will address that during your appointment.</p>
             <form className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -233,7 +233,7 @@ export default async function ContactPage({
       {copy.testimonials[0] && (
         <section className="py-20 px-6 text-white" style={{ backgroundColor: 'var(--brand)' }}>
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-6xl font-serif mb-4" style={{ opacity: 0.4 }}>"</p>
+            <p className="text-6xl font-serif mb-4" style={{ opacity: 0.4 }}>&ldquo;</p>
             <p className="text-xl leading-relaxed mb-6">{copy.testimonials[0].text}</p>
             <p className="text-sm font-semibold" style={{ color: 'var(--on-brand-muted)' }}>
               — {copy.testimonials[0].author}

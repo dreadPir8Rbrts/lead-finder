@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     instantly_api_key: str = ""
     instantly_api_url: str = "https://api.instantly.ai/api/v1"
     instantly_campaign_id: str = ""
+    # Compatibility with the merged example that placed this frontend setting here.
+    # Next.js still needs its own copy in app/.env.local.
+    next_public_api_url: str | None = None
 
 
 settings = Settings()

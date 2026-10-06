@@ -9,7 +9,7 @@ export default async function AboutPage({
   const { slug } = await params
   const site = await getDemoSite(slug)
   if (!site) notFound()
-  const { copy, business_name, city, state } = site
+  const { copy, business_name } = site
 
   return (
     <>
@@ -97,7 +97,7 @@ export default async function AboutPage({
       {copy.testimonials[1] && (
         <section className="py-20 px-6 text-white" style={{ backgroundColor: 'var(--brand)' }}>
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-6xl font-serif mb-4" style={{ opacity: 0.4 }}>"</p>
+            <p className="text-6xl font-serif mb-4" style={{ opacity: 0.4 }}>&ldquo;</p>
             <p className="text-xl leading-relaxed mb-6">{copy.testimonials[1].text}</p>
             <p className="text-sm font-semibold" style={{ color: 'var(--on-brand-muted)' }}>
               — {copy.testimonials[1].author}

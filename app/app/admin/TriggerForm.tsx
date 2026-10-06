@@ -30,10 +30,10 @@ export default function TriggerForm() {
         }),
       })
       const data = await res.json()
-      setResult(data)
+      setResult(res.ok ? data : { error: 'Failed to start pipeline. Check the API and try again.' })
       // Show the new run right away; AutoRefresh keeps it updating from there
       if (res.ok) router.refresh()
-    } catch (err) {
+    } catch {
       setResult({ error: 'Failed to reach API' })
     } finally {
       setLoading(false)

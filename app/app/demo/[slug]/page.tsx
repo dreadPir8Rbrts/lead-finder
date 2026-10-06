@@ -158,7 +158,7 @@ export default async function DemoHomePage({
       {copy.testimonials[0] && (
         <section className="py-20 px-6" style={{ backgroundColor: 'var(--brand-soft)' }}>
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-6xl font-serif mb-4" style={{ color: 'var(--brand)', opacity: 0.4 }}>"</p>
+            <p className="text-6xl font-serif mb-4" style={{ color: 'var(--brand)', opacity: 0.4 }}>&ldquo;</p>
             <p className="text-xl leading-relaxed mb-6 text-slate-700">{copy.testimonials[0].text}</p>
             <p className="text-sm font-semibold" style={{ color: 'var(--brand)' }}>
               — {copy.testimonials[0].author}

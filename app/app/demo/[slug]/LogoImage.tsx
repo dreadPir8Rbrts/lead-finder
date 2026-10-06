@@ -5,6 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 // GBP logo URLs can go dead after scraping (Google removes old profile photos),
 // so hide the image instead of showing a broken-image icon.
 export default function LogoImage({ src, className }: { src: string; className?: string }) {
+  return <LogoForSource key={src} src={src} className={className} />
+}
+
+// Remount when the URL changes so a previously failed logo can recover.
+function LogoForSource({ src, className }: { src: string; className?: string }) {
   const [failed, setFailed] = useState(false)
   const ref = useRef<HTMLImageElement>(null)
 
