@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { THEMES } from '@/lib/themes'
+import LogoStatus from './LogoStatus'
 
 export type Lead = {
   id: string
@@ -12,6 +13,7 @@ export type Lead = {
   phone: string | null
   email: string | null
   gbp_url: string | null
+  logo_url: string | null
   lead_score: number
   demo_sites: { status: string; slug: string; style: string | null }[] | { status: string; slug: string; style: string | null } | null
   outreach: { status: string }[] | { status: string } | null
@@ -133,7 +135,7 @@ export default function LeadsTable({ leads }: { leads: Lead[] }) {
         <table className="min-w-full text-sm">
           <thead className="border-b border-gray-200 bg-gray-50">
             <tr>
-              {['Business', 'Location', 'Phone', 'Email', 'Score', 'Demo Site', 'GBP', 'Outreach'].map(h => (
+              {['Business', 'Location', 'Phone', 'Email', 'Score', 'Demo Site', 'Logo', 'GBP', 'Outreach'].map(h => (
                 <th key={h} className="px-4 py-2 text-left font-medium text-gray-600">{h}</th>
               ))}
             </tr>
@@ -141,7 +143,7 @@ export default function LeadsTable({ leads }: { leads: Lead[] }) {
           <tbody className="divide-y divide-gray-100">
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-center text-gray-400">
+                <td colSpan={9} className="px-4 py-6 text-center text-gray-400">
                   {leads.length === 0 ? 'No leads yet' : 'No leads match these filters'}
                 </td>
               </tr>
@@ -169,6 +171,9 @@ export default function LeadsTable({ leads }: { leads: Lead[] }) {
                     ) : (
                       <span className="text-gray-400">—</span>
                     )}
+                  </td>
+                  <td className="px-4 py-2">
+                    <LogoStatus url={lead.logo_url} hasDemo={Boolean(demo?.slug)} />
                   </td>
                   <td className="px-4 py-2">
                     {lead.gbp_url

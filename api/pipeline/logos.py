@@ -8,19 +8,27 @@ GOOGLE_SIZE_RE = re.compile(r"/s\d+(-[a-z-]+)?/")
 LOGO_SIZE = 256
 
 
-def usable_logo_url(url: Optional[str]) -> Optional[str]:
-    """Return a higher-res logo URL if it actually serves an image, else None.
+def resolve_logo_url(url: Optional[str]) -> Optional[str]:
+    """Prefer a working higher-res image, retaining the source on failure.
 
-    Outscraper's `logo` is often a legacy Google profile-photo link that now 404s.
+    Retain failed URLs so the admin can distinguish missing logos from broken ones.
+    The browser hides broken images on demos and reports their status in admin.
     """
-    if not url:
+    if not url or not url.strip():
         return None
-    if "googleusercontent.com" in url:
-        url = GOOGLE_SIZE_RE.sub(lambda m: f"/s{LOGO_SIZE}{m.group(1) or ''}/", url, count=1)
+    url = url.strip()
+    larger_url = url
     try:
-        resp = httpx.get(url, timeout=5, follow_redirects=True)
-    except httpx.HTTPError:
-        return None
-    if resp.status_code != 200 or not resp.headers.get("content-type", "").startswith("image/"):
-        return None
+        host = httpx.URL(url).host
+    except httpx.InvalidURL:
+        return url
+    if host == "googleusercontent.com" or host.endswith(".googleusercontent.com"):
+        larger_url = GOOGLE_SIZE_RE.sub(lambda m: f"/s{LOGO_SIZE}{m.group(1) or ''}/", url, count=1)
+    for candidate in dict.fromkeys([larger_url, url]):
+        try:
+            resp = httpx.get(candidate, timeout=5, follow_redirects=True)
+        except (httpx.HTTPError, httpx.InvalidURL):
+            continue
+        if resp.status_code == 200 and resp.headers.get("content-type", "").startswith("image/"):
+            return candidate
     return url

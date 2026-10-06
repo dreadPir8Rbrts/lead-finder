@@ -5,7 +5,7 @@ from .scraper import scrape_gbp
 from .filters import filter_and_score, make_slug
 from .site_gen import generate_copy
 from .outreach import queue_email
-from .logos import usable_logo_url
+from .logos import resolve_logo_url
 from ..db.client import supabase
 from ..config import settings
 
@@ -42,7 +42,7 @@ def run_pipeline(filters: dict, run_id: str):
                 "city": lead.get("city"),
                 "state": lead.get("state_code"),
                 "gbp_url": lead.get("location_link"),
-                "logo_url": usable_logo_url(lead.get("logo")),
+                "logo_url": resolve_logo_url(lead.get("logo")),
                 "email": lead.get("email"),
                 "phone": lead.get("phone"),
                 "address": lead.get("address"),

@@ -1,0 +1,2 @@
+# App Platform detects the Python service from the repository root.
+-r api/requirements.txt
