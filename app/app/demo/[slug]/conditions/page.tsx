@@ -36,19 +36,19 @@ export default async function ConditionsPage({
       {/* Page Hero */}
       <section
         className="text-white py-20 px-6"
-        style={{ background: 'linear-gradient(135deg, #0a4a4e 0%, #0B6E72 100%)' }}
+        style={{ background: 'linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%)' }}
       >
         <div className="max-w-6xl mx-auto">
-          <p className="text-teal-200 text-sm font-semibold uppercase tracking-widest mb-3">
+          <p className="text-[var(--on-brand-muted)] text-sm font-semibold uppercase tracking-widest mb-3">
             Conditions Treated
           </p>
           <h1 className="text-4xl md:text-5xl font-bold mb-3">What We Treat</h1>
-          <p className="text-teal-100 text-lg max-w-xl">{copy.service_area}</p>
+          <p className="text-[var(--on-brand-subtle)] text-lg max-w-xl">{copy.service_area}</p>
         </div>
       </section>
 
       {/* Conditions Grid */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-[var(--surface)]">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-slate-800 text-center mb-3">
             Conditions We Treat
@@ -65,7 +65,7 @@ export default async function ConditionsPage({
               >
                 <div
                   className="w-11 h-11 rounded-full flex items-center justify-center mb-4 text-white font-bold"
-                  style={{ backgroundColor: '#0B6E72' }}
+                  style={{ backgroundColor: 'var(--brand)' }}
                 >
                   ✓
                 </div>
@@ -78,9 +78,9 @@ export default async function ConditionsPage({
       </section>
 
       {/* How We Can Help */}
-      <section className="py-20 px-6 bg-slate-50">
+      <section className="py-20 px-6 bg-[var(--surface-alt)]">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#0B6E72' }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--brand)' }}>
             Our Approach
           </p>
           <h2 className="text-3xl font-bold text-slate-800 mb-6">How We Can Help</h2>
@@ -93,9 +93,9 @@ export default async function ConditionsPage({
 
       {/* FAQ */}
       {copy.faq.length > 0 && (
-        <section className="py-20 px-6 bg-white">
+        <section className="py-20 px-6 bg-[var(--surface)]">
           <div className="max-w-3xl mx-auto">
-            <p className="text-center text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#0B6E72' }}>
+            <p className="text-center text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--brand)' }}>
               Common Questions
             </p>
             <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
@@ -118,8 +118,8 @@ export default async function ConditionsPage({
       )}
 
       {/* Internal CTA */}
-      <section className="py-14 px-6 text-center" style={{ backgroundColor: '#e6f5f5' }}>
-        <h2 className="text-2xl font-bold mb-2" style={{ color: '#0a4a4e' }}>
+      <section className="py-14 px-6 text-center" style={{ backgroundColor: 'var(--brand-soft)' }}>
+        <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--brand-dark)' }}>
           Ready to find relief?
         </h2>
         <p className="text-slate-600 mb-6">
@@ -127,8 +127,7 @@ export default async function ConditionsPage({
         </p>
         <Link
           href={`${base}/contact`}
-          className="inline-block text-white font-bold px-8 py-3 rounded-full transition-colors"
-          style={{ backgroundColor: '#0B6E72' }}
+          className="inline-block bg-[var(--btn)] hover:bg-[var(--btn-hover)] text-[var(--btn-text)] font-bold px-8 py-3 rounded-[var(--radius-btn)] transition-colors"
         >
           {copy.cta}
         </Link>

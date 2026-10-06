@@ -1,14 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import StylePicker from './StylePicker'
+import { DEFAULT_STYLE } from '@/lib/themes'
 
 export default function TriggerForm() {
   const [niche, setNiche] = useState('chiropractor')
   const [city, setCity] = useState('Fresno')
   const [state, setState] = useState('CA')
   const [limit, setLimit] = useState(50)
+  const [style, setStyle] = useState(DEFAULT_STYLE)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<{ run_id: string } | { error: string } | null>(null)
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -21,11 +26,13 @@ export default function TriggerForm() {
         body: JSON.stringify({
           niche,
           trigger: 'manual',
-          filters: { niche, city, state, limit },
+          filters: { niche, city, state, limit, style },
         }),
       })
       const data = await res.json()
       setResult(data)
+      // Show the new run right away; AutoRefresh keeps it updating from there
+      if (res.ok) router.refresh()
     } catch (err) {
       setResult({ error: 'Failed to reach API' })
     } finally {
@@ -73,6 +80,7 @@ export default function TriggerForm() {
           className="border border-gray-300 rounded px-3 py-1.5 text-sm w-24 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
+      <StylePicker value={style} onChange={setStyle} />
       <button
         type="submit"
         disabled={loading}

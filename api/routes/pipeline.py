@@ -36,6 +36,7 @@ def create_test_lead(body: TestLeadCreate):
         "phone": body.phone,
         "email": body.email,
         "address": body.address,
+        "logo_url": body.logo_url,
         "slug": slug,
         "lead_score": sum([bool(body.address), bool(body.email), bool(body.phone)]),
         "has_website": False,
@@ -51,6 +52,7 @@ def create_test_lead(body: TestLeadCreate):
         "lead_id": lead_id,
         "slug": slug,
         "status": "generated",
+        "style": body.style,
         "site_data": copy,
     }).execute()
 

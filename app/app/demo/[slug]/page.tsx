@@ -18,36 +18,34 @@ export default async function DemoHomePage({
       {/* Hero */}
       <section
         className="text-white py-28 px-6"
-        style={{ background: 'linear-gradient(135deg, #0a4a4e 0%, #0B6E72 50%, #0d8a90 100%)' }}
+        style={{ background: 'linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 50%, var(--brand-mid) 100%)' }}
       >
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 max-w-3xl">
             {copy.hero.headline}
           </h1>
-          <p className="text-teal-100 text-xl mb-9 max-w-2xl leading-relaxed">
+          <p className="text-[var(--on-brand-subtle)] text-xl mb-9 max-w-2xl leading-relaxed">
             {copy.hero.subheadline}
           </p>
           <div className="flex flex-wrap gap-4">
             {phone ? (
               <a
                 href={`tel:${phone}`}
-                className="bg-white font-bold text-lg px-7 py-3 rounded-full hover:bg-teal-50 transition-colors"
-                style={{ color: '#0B6E72' }}
+                className="bg-[var(--btn)] text-[var(--btn-text)] font-bold text-lg px-7 py-3 rounded-[var(--radius-btn)] hover:bg-[var(--btn-hover)] transition-colors"
               >
                 {copy.cta}
               </a>
             ) : (
               <Link
                 href={`${base}/contact`}
-                className="bg-white font-bold text-lg px-7 py-3 rounded-full hover:bg-teal-50 transition-colors"
-                style={{ color: '#0B6E72' }}
+                className="bg-[var(--btn)] text-[var(--btn-text)] font-bold text-lg px-7 py-3 rounded-[var(--radius-btn)] hover:bg-[var(--btn-hover)] transition-colors"
               >
                 {copy.cta}
               </Link>
             )}
             <Link
               href={`${base}/conditions`}
-              className="border-2 border-white text-white font-semibold text-lg px-7 py-3 rounded-full hover:bg-white/10 transition-colors"
+              className="border-2 border-white text-white font-semibold text-lg px-7 py-3 rounded-[var(--radius-btn)] hover:bg-white/10 transition-colors"
             >
               See What We Treat
             </Link>
@@ -57,17 +55,17 @@ export default async function DemoHomePage({
 
       {/* UVP Banner */}
       {copy.uvp && (
-        <section className="py-8 px-6" style={{ backgroundColor: '#e6f5f5' }}>
-          <p className="max-w-3xl mx-auto text-center font-semibold text-lg" style={{ color: '#0a4a4e' }}>
+        <section className="py-8 px-6" style={{ backgroundColor: 'var(--brand-soft)' }}>
+          <p className="max-w-3xl mx-auto text-center font-semibold text-lg" style={{ color: 'var(--brand-dark)' }}>
             {copy.uvp}
           </p>
         </section>
       )}
 
       {/* Conditions Treated */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-[var(--surface)]">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#0B6E72' }}>
+          <p className="text-center text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--brand)' }}>
             Conditions We Treat
           </p>
           <h2 className="text-3xl font-bold text-slate-800 text-center mb-3">
@@ -84,7 +82,7 @@ export default async function DemoHomePage({
               >
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center mb-4 text-white font-bold"
-                  style={{ backgroundColor: '#0B6E72' }}
+                  style={{ backgroundColor: 'var(--brand)' }}
                 >
                   ✓
                 </div>
@@ -97,7 +95,7 @@ export default async function DemoHomePage({
             <Link
               href={`${base}/conditions`}
               className="font-semibold hover:underline"
-              style={{ color: '#0B6E72' }}
+              style={{ color: 'var(--brand)' }}
             >
               View All Conditions We Treat →
             </Link>
@@ -106,16 +104,16 @@ export default async function DemoHomePage({
       </section>
 
       {/* Meet the Doctor */}
-      <section className="py-20 px-6 bg-slate-50">
+      <section className="py-20 px-6 bg-[var(--surface-alt)]">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           <div
             className="rounded-3xl h-80 flex items-center justify-center text-7xl font-bold select-none"
-            style={{ backgroundColor: '#cce8e9', color: '#0B6E72' }}
+            style={{ backgroundColor: 'var(--brand-soft-border)', color: 'var(--brand)' }}
           >
             {copy.doctor.name.split(' ').slice(-1)[0]?.charAt(0) ?? 'D'}
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#0B6E72' }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--brand)' }}>
               Meet Your Doctor
             </p>
             <h2 className="text-3xl font-bold text-slate-800 mb-4">{copy.doctor.name}</h2>
@@ -123,7 +121,7 @@ export default async function DemoHomePage({
             <Link
               href={`${base}/about`}
               className="font-semibold hover:underline"
-              style={{ color: '#0B6E72' }}
+              style={{ color: 'var(--brand)' }}
             >
               Learn more about us →
             </Link>
@@ -132,9 +130,9 @@ export default async function DemoHomePage({
       </section>
 
       {/* Services Overview */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-[var(--surface)]">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#0B6E72' }}>
+          <p className="text-center text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--brand)' }}>
             Our Services
           </p>
           <h2 className="text-3xl font-bold text-slate-800 text-center mb-3">
@@ -146,9 +144,9 @@ export default async function DemoHomePage({
               <div
                 key={s}
                 className="flex items-center gap-3 rounded-xl px-5 py-4"
-                style={{ backgroundColor: '#e6f5f5' }}
+                style={{ backgroundColor: 'var(--brand-soft)' }}
               >
-                <span className="font-bold text-lg" style={{ color: '#0B6E72' }}>✓</span>
+                <span className="font-bold text-lg" style={{ color: 'var(--brand)' }}>✓</span>
                 <span className="text-slate-700 font-medium">{s}</span>
               </div>
             ))}
@@ -158,11 +156,11 @@ export default async function DemoHomePage({
 
       {/* Testimonial Highlight */}
       {copy.testimonials[0] && (
-        <section className="py-20 px-6 text-white" style={{ backgroundColor: '#0B6E72' }}>
+        <section className="py-20 px-6" style={{ backgroundColor: 'var(--brand-soft)' }}>
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-6xl font-serif mb-4" style={{ opacity: 0.4 }}>"</p>
-            <p className="text-xl leading-relaxed mb-6">{copy.testimonials[0].text}</p>
-            <p className="text-sm font-semibold" style={{ color: '#99d4d6' }}>
+            <p className="text-6xl font-serif mb-4" style={{ color: 'var(--brand)', opacity: 0.4 }}>"</p>
+            <p className="text-xl leading-relaxed mb-6 text-slate-700">{copy.testimonials[0].text}</p>
+            <p className="text-sm font-semibold" style={{ color: 'var(--brand)' }}>
               — {copy.testimonials[0].author}
             </p>
           </div>
