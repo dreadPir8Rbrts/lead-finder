@@ -114,7 +114,7 @@ export default async function DemoHomePage({
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--brand)' }}>
-              Meet Your Doctor
+              Meet Your Chiropractor
             </p>
             <h2 className="text-3xl font-bold text-slate-800 mb-4">{copy.doctor.name}</h2>
             <p className="text-slate-600 leading-relaxed mb-6">{copy.doctor.bio}</p>
